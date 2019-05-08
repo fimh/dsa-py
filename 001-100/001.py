@@ -1,6 +1,8 @@
 """
-Link:   https://leetcode.com/problems/two-sum
-Ref:    https://xiaozhuanlan.com/topic/6347850291
+Question:   Two Sum
+Difficulty: Easy
+Link:       https://leetcode.com/problems/two-sum
+Ref:        https://xiaozhuanlan.com/topic/6347850291
 
 Given an array of integers, return indices of the two numbers such that they add up to a specific target.
 

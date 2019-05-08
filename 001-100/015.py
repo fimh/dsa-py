@@ -1,6 +1,8 @@
 """
-Link:   https://leetcode.com/problems/3sum/
-Ref:    https://xiaozhuanlan.com/topic/9504236871
+Question:   3Sum
+Difficulty: Medium
+Link:       https://leetcode.com/problems/3sum/
+Ref:        https://xiaozhuanlan.com/topic/9504236871
 
 Given an array nums of n integers, are there elements a, b, c in nums such that a + b + c = 0? Find all unique triplets in the array which gives the sum of zero.
 
