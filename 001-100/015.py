@@ -75,5 +75,39 @@ class Solution2(object):
         return [list(i) for i in res]
 
 
+class Solution3(object):
+    def threeSum(self, nums):
+        """
+        Sort first
+        Then, fix left boundary, increase it when encountering a duplicated element
+        Finally, use two pointers to scan the rest list from both side to the center.
+        Time complexity: O(n^2)
+        Space complexity: O(n)
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        n, res = len(nums), []
+        nums.sort()
+        for i in range(n):
+            if i > 0 and nums[i] == nums[i - 1]:
+                continue
+            left, right = i + 1, n - 1
+            while left < right:
+                tmp = nums[i] + nums[left] + nums[right]
+                if tmp == 0:
+                    res.append([nums[i], nums[left], nums[right]])
+                    left += 1
+                    right -= 1
+                    while left < right and nums[left] == nums[left - 1]:
+                        left += 1
+                    while left < right and nums[right] == nums[right + 1]:
+                        right -= 1
+                elif tmp > 0:
+                    right -= 1
+                else:
+                    left += 1
+        return res
+
+
 if __name__ == '__main__':
-    print(Solution2().threeSum([-1, 0, 1, 2, -1, -4]))
+    print(Solution3().threeSum([-1, 0, 1, 2, -1, -4]))
