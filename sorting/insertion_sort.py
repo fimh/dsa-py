@@ -2,6 +2,12 @@ class Sort:
 
     @staticmethod
     def insertion_sort(arr):
+        """
+        Insertion sort.
+
+        :param arr: List[int], list to be sorted
+        :return: List[int], sorted list
+        """
         # No need to sort
         if arr is None:
             return arr
@@ -17,7 +23,7 @@ class Sort:
             j = i - 1
 
             # find the right position for the new element from out-of-order range
-            # and move elements greater than value to the right
+            # and shift elements greater than value to the right
             while j >= 0 and arr[j] > value:
                 arr[j + 1] = arr[j]
                 j -= 1
@@ -27,4 +33,27 @@ class Sort:
 
 
 if __name__ == '__main__':
-    print(Sort.insertion_sort([4, 5, 6, 1, 3, 2]))
+    print(Sort.insertion_sort([4, 5, 6, 3, 2, 1]))
+
+    import random
+    import time
+
+    import random
+    import time
+
+    time_total = 0
+    time_start = 0
+    time_dur = 0
+    for idx in range(1000):
+        # generate a list with random number
+        random_arr = random.sample(range(0, 1000), 200)
+
+        time_start = time.process_time()
+
+        Sort.insertion_sort(random_arr)
+
+        # calculate the exact total time for sorting
+        time_dur = time.process_time() - time_start
+        time_total += time_dur
+
+    print('elapsed time: {} ms'.format(time_total * 1000))
