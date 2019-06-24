@@ -1,4 +1,4 @@
-class Sort:
+class BubbleSort:
     @staticmethod
     def bubble_sort(arr):
         """
@@ -67,7 +67,7 @@ class Sort:
 
 
 if __name__ == '__main__':
-    print(Sort.bubble_sort_optimized([4, 5, 6, 3, 2, 1]))
+    print(BubbleSort.bubble_sort_optimized([4, 5, 6, 3, 2, 1]))
 
     import random
     import time
@@ -81,7 +81,7 @@ if __name__ == '__main__':
 
         time_start = time.process_time()
 
-        Sort.bubble_sort_optimized(random_arr)
+        BubbleSort.bubble_sort_optimized(random_arr)
 
         # calculate the exact total time for sorting
         time_dur = time.process_time() - time_start

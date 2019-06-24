@@ -1,4 +1,4 @@
-class Sort:
+class QuickSort:
 
     @staticmethod
     def quick_sort(arr):
@@ -16,7 +16,7 @@ class Sort:
         if n <= 1:
             return
 
-        Sort.do_quick_sort(arr, 0, n - 1)
+        QuickSort.do_quick_sort(arr, 0, n - 1)
 
     @staticmethod
     def do_quick_sort(arr, start, end):
@@ -29,10 +29,10 @@ class Sort:
         :return: void, list will be sorted in place
         """
         if start < end:
-            pi = Sort.partition(arr, start, end)
+            pi = QuickSort.partition(arr, start, end)
 
-            Sort.do_quick_sort(arr, start, pi - 1)
-            Sort.do_quick_sort(arr, pi + 1, end)
+            QuickSort.do_quick_sort(arr, start, pi - 1)
+            QuickSort.do_quick_sort(arr, pi + 1, end)
 
     @staticmethod
     def partition(arr, start, end):
@@ -62,7 +62,7 @@ class Sort:
 
 if __name__ == '__main__':
     arr = [4, 5, 6, 3, 2, 1]
-    Sort.quick_sort(arr)
+    QuickSort.quick_sort(arr)
     print(arr)
 
     import random
@@ -77,7 +77,7 @@ if __name__ == '__main__':
 
         time_start = time.process_time()
 
-        Sort.quick_sort(random_arr)
+        QuickSort.quick_sort(random_arr)
 
         # calculate the exact total time for sorting
         time_dur = time.process_time() - time_start

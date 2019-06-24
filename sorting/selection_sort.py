@@ -1,4 +1,4 @@
-class Sort:
+class SelectionSort:
 
     @staticmethod
     def selection_sort_min_version(arr):
@@ -68,8 +68,8 @@ class Sort:
 
 
 if __name__ == '__main__':
-    print(Sort.selection_sort_min_version([4, 5, 6, 3, 2, 1]))
-    print(Sort.selection_sort_max_version([4, 5, 6, 3, 2, 1]))
+    print(SelectionSort.selection_sort_min_version([4, 5, 6, 3, 2, 1]))
+    print(SelectionSort.selection_sort_max_version([4, 5, 6, 3, 2, 1]))
 
     import random
     import time
@@ -83,7 +83,7 @@ if __name__ == '__main__':
 
         time_start = time.process_time()
 
-        Sort.selection_sort_max_version(random_arr)
+        SelectionSort.selection_sort_max_version(random_arr)
 
         # calculate the exact total time for sorting
         time_dur = time.process_time() - time_start

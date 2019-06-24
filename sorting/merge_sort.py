@@ -1,4 +1,4 @@
-class Sort:
+class MergeSort:
 
     @staticmethod
     def merge_sort(arr):
@@ -10,7 +10,7 @@ class Sort:
         """
         copy = list(arr)
 
-        Sort.do_merge_sort(copy, arr, 0, len(arr))
+        MergeSort.do_merge_sort(copy, arr, 0, len(arr))
 
     @staticmethod
     def do_merge_sort(ref, result, start, end):
@@ -35,8 +35,8 @@ class Sort:
         # it's a little tricky here
         # pass ref as result to sub recursive calls, so we can get sorted sub-list in ref,
         # then we merge two sub-ref into result
-        Sort.do_merge_sort(result, ref, start, mid)
-        Sort.do_merge_sort(result, ref, mid, end)
+        MergeSort.do_merge_sort(result, ref, start, mid)
+        MergeSort.do_merge_sort(result, ref, mid, end)
 
         # merge ref left- and right- side into result
         i = start
@@ -55,7 +55,7 @@ class Sort:
 
 if __name__ == '__main__':
     arr = [4, 5, 6, 3, 2, 1]
-    Sort.merge_sort(arr)
+    MergeSort.merge_sort(arr)
     print(arr)
 
     import random
@@ -70,7 +70,7 @@ if __name__ == '__main__':
 
         time_start = time.process_time()
 
-        Sort.merge_sort(random_arr)
+        MergeSort.merge_sort(random_arr)
 
         # calculate the exact total time for sorting
         time_dur = time.process_time() - time_start

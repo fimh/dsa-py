@@ -1,4 +1,4 @@
-class Sort:
+class InsertionSort:
 
     @staticmethod
     def insertion_sort(arr):
@@ -33,7 +33,7 @@ class Sort:
 
 
 if __name__ == '__main__':
-    print(Sort.insertion_sort([4, 5, 6, 3, 2, 1]))
+    print(InsertionSort.insertion_sort([4, 5, 6, 3, 2, 1]))
 
     import random
     import time
@@ -50,7 +50,7 @@ if __name__ == '__main__':
 
         time_start = time.process_time()
 
-        Sort.insertion_sort(random_arr)
+        InsertionSort.insertion_sort(random_arr)
 
         # calculate the exact total time for sorting
         time_dur = time.process_time() - time_start
