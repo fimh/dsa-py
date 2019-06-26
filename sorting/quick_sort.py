@@ -71,7 +71,7 @@ if __name__ == '__main__':
     time_total = 0
     time_start = 0
     time_dur = 0
-    for idx in range(10000):
+    for idx in range(1000):
         # generate a list with random number
         random_arr = random.sample(range(0, 1000), 200)
 
