@@ -78,6 +78,12 @@ if __name__ == '__main__':
         time_start = time.process_time()
 
         QuickSort.quick_sort(random_arr)
+        # FIXME why python-based sorting is much slower than the built-in one?
+        # for built-in sort function, refer to
+        # https://github.com/python/cpython/blob/master/Objects/listobject.c
+        # https://github.com/python/cpython/blob/master/Python/bltinmodule.c
+        # https://github.com/lattera/glibc/blob/master/stdlib/qsort.c
+        # random_arr.sort()
 
         # calculate the exact total time for sorting
         time_dur = time.process_time() - time_start
