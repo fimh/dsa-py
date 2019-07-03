@@ -45,6 +45,25 @@ class BinaryTreeTraversal(object):
                 arr.append(node.right)
 
     @staticmethod
+    def level_order_recursive(root: TreeNode):
+        if root is None:
+            return
+
+        h = BinaryTreeTraversal.height(root)
+        for i in range(1, h + 1):
+            BinaryTreeTraversal.given_level_order(root, i)
+
+    @staticmethod
+    def given_level_order(root: TreeNode, level):
+        if root is None:
+            return
+        if level == 1:
+            print(root.val, end=' ')
+        elif level > 1:
+            BinaryTreeTraversal.given_level_order(root.left, level - 1)
+            BinaryTreeTraversal.given_level_order(root.right, level - 1)
+
+    @staticmethod
     def height(root: TreeNode):
         if root is None:
             return 0
@@ -81,6 +100,9 @@ if __name__ == '__main__':
 
     print('\nlevel-order:', end='\t')
     BinaryTreeTraversal.level_order(a)
+
+    print('\nlevel-order-recursive:', end='\t')
+    BinaryTreeTraversal.level_order_recursive(a)
 
     print('\nheight:', end='\t')
     print(BinaryTreeTraversal.height(a))
