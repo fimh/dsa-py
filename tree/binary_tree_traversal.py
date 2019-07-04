@@ -43,6 +43,7 @@ class BinaryTreeTraversal(object):
                 arr.append(node.left)
             if node.right is not None:
                 arr.append(node.right)
+        print('\n')
 
     @staticmethod
     def level_order_recursive(root: TreeNode):
