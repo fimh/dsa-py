@@ -1,3 +1,6 @@
+import math
+
+
 class Heap:
     """
     This is a max-heap with root node starting from 1.
@@ -35,6 +38,12 @@ class Heap:
             return None
 
         return self.arr[1]
+
+    def get_arr(self):
+        if self.count == 0:
+            return None
+
+        return self.arr[1:self.count + 1]
 
     @staticmethod
     def heapify_upwards_1_based(arr, i):
@@ -95,6 +104,32 @@ class Heap:
             arr[i], arr[max_pos] = arr[max_pos], arr[i]
             i = max_pos
 
+    @staticmethod
+    def draw_heap(arr, zero_based=True):
+        """
+        Print heap in a human readable way.
+        :param arr: the heap
+        :param zero_based: true, the root node is starting from 0; else, false
+        :return: the printed string
+        """
+
+        if arr is None:
+            return 'None'
+
+        if len(arr) == 0:
+            return 'Empty heap'
+
+        ret = ''
+        for i, n in enumerate(arr):
+            ret += str(n)
+            # add line break
+            if i == 2 ** int(math.log(i + 1, 2) + 1) - 2 or i == len(arr) - 1:
+                ret += '\n'
+            else:
+                ret += ', '
+
+        return ret
+
 
 if __name__ == '__main__':
     heap = Heap(12)
@@ -103,6 +138,9 @@ if __name__ == '__main__':
     for i in arr:
         heap.insert(i)
     print(heap.arr, heap.count)
+    print(heap.get_arr())
+    print()
+    print(Heap.draw_heap(heap.get_arr()))
 
     for i in range(2):
         heap.remove_top()
