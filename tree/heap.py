@@ -199,3 +199,43 @@ if __name__ == '__main__':
     for i in range(2):
         heap.remove_top()
         print(heap.arr, heap.count)
+
+    print('\nCompare two heapify approaches:')
+    import random
+    import time
+
+    time_total_1 = 0
+    time_total_2 = 0
+    time_start = 0
+    time_dur = 0
+    for idx in range(1000):
+        # generate a list with random number
+        random_arr = random.sample(range(0, 1000), 200)
+
+        # 1st - heapify when creating -------------- @start
+        # time complexity: O(n), not O(nlogn); for details, refer to https://time.geekbang.org/column/article/69913
+        time_start = time.process_time()
+
+        tmp_heap = Heap(len(random_arr), init_data=random_arr)
+
+        # calculate the exact total time
+        time_dur = time.process_time() - time_start
+        time_total_1 += time_dur
+
+        # 1st - heapify when creating -------------- @end
+
+        # 2ed - heapify via inserting -------------- @start
+        time_start = time.process_time()
+
+        tmp_heap_2 = Heap(len(random_arr))
+        for node in random_arr:
+            tmp_heap_2.insert(node)
+
+        # calculate the exact total time
+        time_dur = time.process_time() - time_start
+        time_total_2 += time_dur
+
+        # 2ed - heapify via inserting -------------- @end
+
+    print('elapsed time for heapify when creating: {} ms'.format(time_total_1 * 1000))
+    print('elapsed time for heapify when inserting: {} ms'.format(time_total_2 * 1000))
