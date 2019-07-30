@@ -6,11 +6,27 @@ class Heap:
     This is a max-heap / min-heap with root node starting from 1.
     """
 
-    def __init__(self, capacity: int, max_heap: bool = True):
+    def __init__(self, capacity: int, max_heap: bool = True, init_data=None):
+        """
+        :param capacity: int, capacity of the current heap
+        :param max_heap: bool, True - max-heap, False - min-heap
+        :param init_data: List[int], initial passed-in data
+        """
+
         self.arr = [0] * (capacity + 1)
         self.max_size = capacity
         self.count = 0
         self._max_heap = max_heap
+
+        if type(init_data) is list and len(init_data) <= self.max_size:
+            for i in range(0, len(init_data)):
+                self.arr[i + 1] = init_data[i]
+
+            self.count = len(init_data)
+
+            # build heap on the init data
+            for i in range(self.count // 2, 0, -1):  # [n//2, 1]
+                Heap.heapify_downwards_1_based(self.arr, self.count, i, self._max_heap)
 
     def insert(self, data):
         if self.count >= self.max_size:  # heap is full
@@ -170,11 +186,11 @@ class Heap:
 
 
 if __name__ == '__main__':
-    heap = Heap(12)
-
     arr = [32, 64, 20, 27, 56, 40]
-    for i in arr:
-        heap.insert(i)
+    heap = Heap(12, init_data=arr)
+
+    # for i in arr:
+    #     heap.insert(i)
     print(heap.arr, heap.count)
     print(heap.get_arr())
     print()
