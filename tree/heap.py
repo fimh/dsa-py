@@ -3,15 +3,16 @@ import math
 
 class Heap:
     """
-    This is a max-heap with root node starting from 1.
+    This is a max-heap / min-heap with root node starting from 1.
     """
 
-    def __init__(self, capacity: int):
+    def __init__(self, capacity: int, max_heap: bool = True):
         self.arr = [0] * (capacity + 1)
         self.max_size = capacity
         self.count = 0
+        self._max_heap = max_heap
 
-    def insert(self, data: int):
+    def insert(self, data):
         if self.count >= self.max_size:  # heap is full
             return
 
@@ -20,7 +21,7 @@ class Heap:
         self.arr[self.count] = data
 
         # heapify from bottom to top
-        self.heapify_upwards_1_based(self.arr, self.count)
+        self.heapify_upwards_1_based(self.arr, self.count, self._max_heap)
 
     def remove_top(self):
         if self.count == 0:  # heap is empty
@@ -31,7 +32,7 @@ class Heap:
         self.count -= 1
 
         # heapify from top to bottom
-        self.heapify_downwards_1_based(self.arr, self.count, 1)
+        self.heapify_downwards_1_based(self.arr, self.count, 1, self._max_heap)
 
     def get_top(self):
         if self.count == 0:
@@ -46,63 +47,100 @@ class Heap:
         return self.arr[1:self.count + 1]
 
     @staticmethod
-    def heapify_upwards_1_based(arr, i):
+    def heapify_upwards_1_based(arr, i, max_heap: bool = True):
         """
         Heapify the given array at index = i from bottom to top.
         :param arr: List[int], the heap array
         :param i: int, the starting index to heapify
+        :param max_heap: bool, true - max heap, false - min heap
         :return: void, the operation is in place
         """
 
-        while i // 2 > 0 and arr[i] > arr[i // 2]:
-            arr[i], arr[i // 2] = arr[i // 2], arr[i]
-            i = i // 2
+        while i > 1:
+            p = i // 2
+            if (max_heap and arr[i] > arr[p]) or (not max_heap and arr[i] < arr[p]):
+                arr[i], arr[p] = arr[p], arr[i]
+                i = p
+            else:
+                break
 
     @staticmethod
-    def heapify_downwards_0_based(arr, n, i):
+    def heapify_upwards_0_based(arr, i, max_heap: bool = True):
+        """
+        Heapify the given array at index = i from bottom to top.
+        :param arr: List[int], the heap array
+        :param i: int, the starting index to heapify
+        :param max_heap: bool, true - max heap, false - min heap
+        :return: void, the operation is in place
+        """
+
+        while i > 0:
+            p = (i - 1) // 2
+            if (max_heap and arr[i] > arr[p]) or (not max_heap and arr[i] < arr[p]):
+                arr[i], arr[p] = arr[p], arr[i]
+                i = p
+            else:
+                break
+
+    @staticmethod
+    def heapify_downwards_0_based(arr, n, i, max_heap: bool = True):
         """
         Heapify the given array at index = i from top to bottom.
         The root node of heap will start from 0.
         :param arr: List[int], the heap array
         :param n: int, the heap size
         :param i: int, the starting index to heapify
+        :param max_heap: bool, true - max heap, false - min heap
         :return: void, the operation is in place
         """
 
         while True:
-            max_pos = i
-            if i * 2 + 1 <= n - 1 and arr[i] < arr[i * 2 + 1]:
-                max_pos = i * 2 + 1
-            if i * 2 + 2 <= n - 1 and arr[max_pos] < arr[i * 2 + 2]:
-                max_pos = i * 2 + 2
-            if max_pos == i:
+            target_pos = i
+            left_child = i * 2 + 1
+            right_child = i * 2 + 2
+            if left_child <= n - 1 and ((max_heap and arr[i] < arr[left_child])
+                                        or
+                                        (not max_heap and arr[i] > arr[left_child])):
+                target_pos = left_child
+            if right_child <= n - 1 and ((max_heap and arr[target_pos] < arr[right_child])
+                                         or
+                                         (not max_heap and arr[target_pos] > arr[right_child])):
+                target_pos = right_child
+            if target_pos == i:  # no change, break the loop
                 break
 
-            arr[i], arr[max_pos] = arr[max_pos], arr[i]
-            i = max_pos
+            arr[i], arr[target_pos] = arr[target_pos], arr[i]
+            i = target_pos
 
     @staticmethod
-    def heapify_downwards_1_based(arr, n, i):
+    def heapify_downwards_1_based(arr, n, i, max_heap: bool = True):
         """
         Heapify the given array at index = i from top to bottom.
         The root node of heap will start from 1.
         :param arr: List[int], the heap array
         :param n: int, the heap size
         :param i: int, the starting index to heapify
+        :param max_heap: bool, true - max heap, false - min heap
         :return: void, the operation is in place
         """
 
         while True:
-            max_pos = i
-            if i * 2 <= n and arr[i] < arr[i * 2]:
-                max_pos = i * 2
-            if i * 2 + 1 <= n and arr[max_pos] < arr[i * 2 + 1]:
-                max_pos = i * 2 + 1
-            if max_pos == i:
+            target_pos = i
+            left_child = i * 2
+            right_child = i * 2 + 1
+            if left_child <= n and ((max_heap and arr[i] < arr[left_child])
+                                    or
+                                    (not max_heap and arr[i] > arr[left_child])):
+                target_pos = left_child
+            if right_child <= n and ((max_heap and arr[target_pos] < arr[right_child])
+                                     or
+                                     (not max_heap and arr[target_pos] > arr[right_child])):
+                target_pos = right_child
+            if target_pos == i:
                 break
 
-            arr[i], arr[max_pos] = arr[max_pos], arr[i]
-            i = max_pos
+            arr[i], arr[target_pos] = arr[target_pos], arr[i]
+            i = target_pos
 
     @staticmethod
     def draw_heap(arr, zero_based=True):
