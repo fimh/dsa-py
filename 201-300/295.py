@@ -33,6 +33,8 @@ If 99% of all integer numbers from the stream are between 0 and 100, how would y
 
 """
 
+import bisect
+
 
 class MedianFinder1:
     """
@@ -64,9 +66,44 @@ class MedianFinder1:
             return self.nums[n // 2]
 
 
+class MedianFinder2:
+    """
+    Approach 2 - Insertion Sort
+
+    Keeping our input container always sorted (i.e. maintaining the sorted nature of the
+    container as an invariant) via the idea of insertion sort.
+
+    Time - O(n), Space - O(n)
+    """
+
+    def __init__(self):
+        """
+        initialize your data structure here.
+        """
+
+        self.nums = []
+
+    def addNum(self, num: int) -> None:
+        if len(self.nums) == 0:
+            self.nums.append(num)
+        else:
+            # equivalent to bisect.insort_left(self.nums, num)
+            # equivalent to std::lower_bound() in c++
+            # https://docs.python.org/3.6/library/bisect.html
+            # http://www.cplusplus.com/reference/algorithm/lower_bound/?kw=lower_bound
+            self.nums.insert(bisect.bisect_left(self.nums, num), num)
+
+    def findMedian(self) -> float:
+        n = len(self.nums)
+        if n % 2 == 0:  # has even numbers
+            return (self.nums[n // 2 - 1] + self.nums[n // 2]) * 0.5
+        else:
+            return self.nums[n // 2]
+
+
 if __name__ == '__main__':
     # Your MedianFinder object will be instantiated and called as such:
-    obj = MedianFinder1()
+    obj = MedianFinder2()
 
     obj.addNum(5)
     obj.addNum(2)
