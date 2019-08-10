@@ -34,6 +34,7 @@ If 99% of all integer numbers from the stream are between 0 and 100, how would y
 """
 
 import bisect
+from heapq import heappush, heappop
 
 
 class MedianFinder1:
@@ -101,15 +102,80 @@ class MedianFinder2:
             return self.nums[n // 2]
 
 
+class MedianFinder3:
+    """
+    Approach 3 - Two Heaps
+
+    Maintain two heaps.
+    A max-heap to store the smaller half of the input numbers
+    A min-heap to store the larger half of the input numbers
+
+    Time - O(logn), Space - O(n)
+    """
+
+    def __init__(self):
+        """
+        initialize your data structure here.
+        """
+
+        # note that, built-in heapq is min heap
+        # self.lo = []  # max heap
+        # self.hi = []  # min heap
+        self.lo = DynamicHeap(False)  # max heap
+        self.hi = DynamicHeap()  # min heap
+
+    def addNum(self, num: int) -> None:
+        # heappush(self.lo, -num)  # add to max heap
+        self.lo.push(num)
+
+        # balancing step
+        # heappush(self.hi, -heappop(self.lo))
+        self.hi.push(self.lo.pop())
+
+        # maintain size property
+        # if len(self.lo) < len(self.hi):
+        #     heappush(self.lo, -heappop(self.hi))
+        if self.lo.size() < self.hi.size():
+            self.lo.push(self.hi.pop())
+
+    def findMedian(self) -> float:
+        # return -self.lo[0] if len(self.lo) > len(self.hi) else (-self.lo[0] + self.hi[0]) * 0.5
+        return self.lo.top() if self.lo.size() > self.hi.size() else (self.lo.top() + self.hi.top()) * 0.5
+
+
+class DynamicHeap:
+
+    def __init__(self, min_heap: bool = True):
+        self._pq = []
+        self._min_heap = min_heap
+
+    def push(self, num: int) -> None:
+        t_val = num if self._min_heap else -num
+        heappush(self._pq, t_val)
+
+    def pop(self) -> int:
+        t_val = heappop(self._pq)
+        return t_val if self._min_heap else -t_val
+
+    def top(self) -> int:
+        return self._pq[0] if self._min_heap else -self._pq[0]
+
+    def size(self) -> int:
+        return len(self._pq)
+
+    # def __sizeof__(self):
+    #     len(self._pq)
+
+
 if __name__ == '__main__':
     # Your MedianFinder object will be instantiated and called as such:
-    obj = MedianFinder2()
+    obj = MedianFinder3()
 
     obj.addNum(5)
     obj.addNum(2)
     obj.addNum(1)
-    print('median of {} is: {}'.format(obj.nums.copy(), obj.findMedian()))
+    print('median is: {}'.format(obj.findMedian()))
 
     obj.addNum(39)
     obj.addNum(20)
-    print('median of {} is: {}'.format(obj.nums.copy(), obj.findMedian()))
+    print('median is: {}'.format(obj.findMedian()))
